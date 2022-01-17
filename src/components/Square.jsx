@@ -12,21 +12,33 @@ export const Board = styled.div`
 
 
 export const Cell = styled.div`
-    background: #099e22;
+    align-items: center;
+    background: ${(props) => props.empty ? '#099e22' : '#0f61fa'};
     color: white;
     display: flex;
     font-size: 4rem;
     height: 5rem;
+    justify-content: center;
     width: 5rem;
+
+    &:hover {
+        background: ${(props) => props.empty ? '#06f72e' : '#0f61fa'};
+        cursor: ${(props) => props.empty ? 'pointer' : 'not-allowed'}
+    }
 `;
 
 const Square = ({clicked, handleClick}) => {
     return (
         <Board>
             {clicked.map((item, index) => {
-                return (
-                    <Cell key={index} onClick={() => handleClick(index)}>{item}</Cell>
-                )
+                return item === "" ?
+                    (
+                        <Cell empty={true} key={index} onClick={() => handleClick(index)}>{item}</Cell>
+                    )
+                : 
+                    (
+                        <Cell empty={false} key={index}>{item}</Cell>
+                    )
             })}
         </Board>
     )
